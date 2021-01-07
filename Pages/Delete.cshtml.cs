@@ -4,18 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Borsa_Andrei_Lab8.Data;
 using Borsa_Andrei_Lab8.Models;
 
-namespace Borsa_Andrei_Lab8.Pages.Categories
+namespace Borsa_Andrei_Lab8.Pages
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context _context;
 
-        public EditModel(Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context context)
+        public DeleteModel(Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context context)
         {
             _context = context;
         }
@@ -39,39 +38,22 @@ namespace Borsa_Andrei_Lab8.Pages.Categories
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
+            Category = await _context.Category.FindAsync(id);
 
-            try
+            if (Category != null)
             {
+                _context.Category.Remove(Category);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(Category.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Category.Any(e => e.ID == id);
         }
     }
 }

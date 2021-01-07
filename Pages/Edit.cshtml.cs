@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Borsa_Andrei_Lab8.Data;
 using Borsa_Andrei_Lab8.Models;
 
-namespace Borsa_Andrei_Lab8.Pages.Categories
+namespace Borsa_Andrei_Lab8.Pages
 {
     public class EditModel : PageModel
     {

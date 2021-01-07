@@ -8,18 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using Borsa_Andrei_Lab8.Data;
 using Borsa_Andrei_Lab8.Models;
 
-namespace Borsa_Andrei_Lab8.Pages.Categories
+namespace Borsa_Andrei_Lab8.Pages
 {
-    public class DeleteModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context _context;
 
-        public DeleteModel(Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context context)
+        public DetailsModel(Borsa_Andrei_Lab8.Data.Borsa_Andrei_Lab8Context context)
         {
             _context = context;
         }
 
-        [BindProperty]
         public Category Category { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -36,24 +35,6 @@ namespace Borsa_Andrei_Lab8.Pages.Categories
                 return NotFound();
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Category = await _context.Category.FindAsync(id);
-
-            if (Category != null)
-            {
-                _context.Category.Remove(Category);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }
