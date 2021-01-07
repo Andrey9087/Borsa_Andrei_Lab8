@@ -15,5 +15,11 @@ namespace Borsa_Andrei_Lab8.Data
         }
 
         public DbSet<Borsa_Andrei_Lab8.Models.Book> Book { get; set; }
+
+        public DbSet<Borsa_Andrei_Lab8.Models.Publisher> Publisher { get; set; }
+
+        public DbSet<Borsa_Andrei_Lab8.Models.Category> Category { get; set; }
+
+        public DbSet<Borsa_Andrei_Lab8.Models.BookCategory> BookCategory { get; set; }
     }
 }
